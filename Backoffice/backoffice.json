@@ -1,0 +1,7 @@
+{
+  "hostname": "localhost",
+  "database": "silentstorm",
+  "username": "root",
+  "password": "password",
+  "port": 13306
+}

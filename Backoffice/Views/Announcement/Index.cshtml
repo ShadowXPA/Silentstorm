@@ -1,0 +1,67 @@
+﻿@model (List<ProjectDto>, List<ProjectStatusDto>, List<ChannelDto>)
+@{
+    (var projects, var projectStatuses, var channels) = Model;
+    var minDate = DateTime.Now.ToString("yyyy-MM-ddTHH:mm");
+    ViewData["Title"] = "Create Announcement";
+}
+
+<form method="post" class="needs-validation form-floating" novalidate>
+    <div class="row">
+        <div class="col col-8">
+            <div class="form-floating mb-3">
+                <select id="project" name="projectId" placeholder="Project" class="form-select" required>
+                    <option value="" selected disabled></option>
+                    @foreach (var project in projects)
+                    {
+                        <option value="@project.Id">@project.Title</option>
+                    }
+                </select>
+                <label for="project">Project *</label>
+                <div class="invalid-feedback">Please select a project.</div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-floating mb-3">
+                <select id="project-status" name="projectStatus" placeholder="Status" class="form-select" required>
+                    <option value="" selected disabled></option>
+                    @foreach (var status in projectStatuses)
+                    {
+                        <option value="@status.Name">@status.Name</option>
+                    }
+                </select>
+                <label for="project-status">Status *</label>
+                <div class="invalid-feedback">Please select a status.</div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="form-floating mb-3">
+                <select id="channel" name="channel.channelId" placeholder="Channel" class="form-select" required>
+                    <option value="" selected disabled></option>
+                    @foreach (var channel in channels)
+                    {
+                        <option value="@channel.ChannelId">@channel.ChannelName</option>
+                    }
+                </select>
+                <label for="channel">Channel *</label>
+                <div class="invalid-feedback">Please select a channel.</div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-floating mb-3">
+                <input type="datetime-local" id="announcement-date" name="announcementDate" min="@minDate" placeholder="Announcement date" class="form-control" required />
+                <label for="announcement-date">Announcement date *</label>
+                <div class="invalid-feedback">Please input a valid date.</div>
+            </div>
+        </div>
+    </div>
+    <div class="form-floating mb-3">
+        <textarea id="announcement" name="announcement" placeholder="Announcement" class="form-control" required></textarea>
+        <label for="announcement">Announcement *</label>
+        <div class="invalid-feedback">This field is required.</div>
+    </div>
+    <div class="mb-3">
+        <input type="submit" class="btn btn-primary d-block ms-auto" value="Create" />
+    </div>
+</form>

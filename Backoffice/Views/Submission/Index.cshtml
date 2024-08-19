@@ -1,0 +1,55 @@
+﻿@model (List<ProjectDto>, List<SilentstormUserDto>)
+@{
+    (var projects, var users) = Model;
+    ViewData["Title"] = "Add song submission";
+}
+
+<form method="post" class="needs-validation form-floating" novalidate>
+    <div class="row">
+        <div class="col col-8">
+            <div class="form-floating mb-3">
+                <select id="project" name="project.id" placeholder="Project" class="form-select" required>
+                    <option value="" selected disabled></option>
+                    @foreach (var project in projects)
+                    {
+                        <option value="@project.Id">@project.Title</option>
+                    }
+                </select>
+                <label for="project">Project *</label>
+                <div class="invalid-feedback">Please select a project.</div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="col form-floating mb-3">
+                <select id="user" name="user.id" placeholder="User" class="form-select" required>
+                    <option value="" selected disabled></option>
+                    @foreach (var user in users)
+                    {
+                        <option value="@user.Id">@user.Username</option>
+                    }
+                </select>
+                <label for="user">User *</label>
+                <div class="invalid-feedback">Please select a user.</div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="form-floating mb-3">
+                <input type="text" id="uri" name="uri" placeholder="URI" class="form-control" required maxlength="255" />
+                <label for="title">URI *</label>
+                <div class="invalid-feedback">Please insert a URI.</div>
+            </div>
+        </div>
+        <div class="col col-7">
+            <div class="form-floating mb-3">
+                <input type="text" id="title" name="title" placeholder="Title" class="form-control" required maxlength="255" />
+                <label for="title">Title *</label>
+                <div class="invalid-feedback">Please insert a title.</div>
+            </div>
+        </div>
+    </div>
+    <div class="mb-3">
+        <input type="submit" class="btn btn-primary d-block ms-auto" value="Add" />
+    </div>
+</form>

@@ -1,0 +1,35 @@
+﻿@model List<ProjectTypeDto>
+@{
+    ViewData["Title"] = "Create new project";
+}
+
+<form method="post" class="needs-validation form-floating" novalidate>
+    <div class="row">
+        <div class="col-8">
+            <div class="form-floating mb-3">
+                <input type="text" id="title" name="title" placeholder="Title" class="form-control" required maxlength="32" />
+                <label for="title">Title *</label>
+                <div class="invalid-feedback">Please insert a title for your project.</div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="col form-floating mb-3">
+                <select id="project-type" name="projectType" placeholder="Type" class="form-select">
+                    <option value="" selected></option>
+                    @foreach (var projectType in Model)
+                    {
+                        <option value="@projectType.Name">@projectType.Name</option>
+                    }
+                </select>
+                <label for="project-type">Project type</label>
+            </div>
+        </div>
+    </div>
+    <div class="form-floating mb-3">
+        <textarea id="description" name="description" placeholder="Description" class="form-control"></textarea>
+        <label for="description">Description</label>
+    </div>
+    <div class="mb-3">
+        <input type="submit" class="btn btn-primary d-block ms-auto" value="Create" />
+    </div>
+</form>

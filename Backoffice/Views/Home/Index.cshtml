@@ -1,0 +1,47 @@
+﻿@model List<ProjectDto>
+@{
+    var projects = Model;
+    ViewData["Title"] = "";
+}
+
+<div class="d-flex align-items-center mb-3">
+    <div class="ms-auto"><a class="btn btn-outline-primary" href="~/project">Create a new project</a></div>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-hover align-middle">
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Title</th>
+                <th scope="col">Type</th>
+                <th scope="col">Status</th>
+                <th scope="col">Created at</th>
+                <th scope="col">Finished at</th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            @if (projects.Count == 0)
+            {
+                <tr class="cursor-pointer text-center">
+                    <td class="" colspan="100">No projects.</td>
+                </tr>
+            }
+            @foreach (var project in projects)
+            {
+                <tr class="project cursor-pointer" data-id="@project.Id">
+                    <th scope="row">@project.Id</th>
+                    <td>@project.Title</td>
+                    <td>@project.ProjectType</td>
+                    <td>@project.ProjectStatus</td>
+                    <td>@project.CreatedAt!.Value.ToShortDateString() @project.CreatedAt.Value.ToShortTimeString()</td>
+                    <td>@project.FinishedAt?.ToShortDateString() @project.FinishedAt?.ToShortTimeString()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script src="~/js/home.js" defer></script>
+}

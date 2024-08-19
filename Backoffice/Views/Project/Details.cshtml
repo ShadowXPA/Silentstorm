@@ -1,0 +1,195 @@
+﻿@using CommonLib.Data
+@model (ProjectDto, List<ProjectAnnouncementDto>, List<SongSubmissionDto>, List<SongVoteDto>)
+@{
+    (var project, var announcements, var submissions, var votes) = Model;
+    var projectStatus = project.ProjectStatus;
+    var createdAt = project.CreatedAt!.Value;
+    var finishedAt = project.FinishedAt;
+    var createdAtString = $@"{createdAt.ToLongDateString()} {createdAt.ToLongTimeString()}";
+    var finishedAtString = $@"{finishedAt?.ToLongDateString()} {finishedAt?.ToLongTimeString()}";
+    ViewData["Title"] = project.Title;
+}
+
+@Html.AntiForgeryToken()
+
+<input type="hidden" id="project-id" value="@project.Id" />
+
+<div class="fs-1 fw-bold mb-3">@project.Title</div>
+
+<div class="d-flex align-items-center mb-3">
+    <div class="">by @project.User!.Username</div>
+    <div class="ms-auto d-flex gap-3 project-actions">
+        @if (project.ProjectStatus != ProjectStatus.Status.Finished)
+        {
+            <input type="button" class="btn btn-outline-success" id="advance" value="Next status" />
+        }
+        <input type="button" class="btn btn-outline-danger" id="delete" value="Delete" />
+    </div>
+</div>
+
+<hr />
+
+<div class="mb-3"><span class="fw-bold">Created at:</span> @createdAtString</div>
+
+@if (finishedAt is not null)
+{
+    <div class="mb-3"><span class="fw-bold">Finished at:</span> @finishedAtString</div>
+}
+
+<div class="d-flex align-items-center gap-3 mb-3">
+    <div class="border rounded p-2">
+        <div class="fw-bold">Type:</div>
+        <div class="">@project.ProjectType</div>
+    </div>
+    <div class="border rounded p-2 me-auto">
+        <div class="fw-bold">Status:</div>
+        <div class="">@project.ProjectStatus</div>
+    </div>
+</div>
+
+<div class="border rounded p-2 mb-3">@project.Description</div>
+
+<div class="table-responsive">
+    <table class="table table-hover align-middle">
+        <caption>Announcements</caption>
+        <thead>
+            <tr>
+                <th scope="col">Status</th>
+                <th scope="col">Date</th>
+                <th scope="col"></th>
+                <th scope="col">Channel</th>
+                <th scope="col">Announcement</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            @if (announcements.Count == 0)
+            {
+                <tr class="cursor-pointer text-center">
+                    <td class="" colspan="100">No announcements.</td>
+                </tr>
+            }
+            @foreach (var announcement in announcements)
+            {
+                var announcementDateString = $@"{announcement.AnnouncementDate!.Value.ToShortDateString()}";
+                var announcementTimeString = $@"{announcement.AnnouncementDate.Value.ToShortTimeString()}";
+                <tr class="announcement cursor-pointer" data-project-status="@announcement.ProjectStatus">
+                    <td>@announcement.ProjectStatus</td>
+                    <td>@announcementDateString<br />@announcementTimeString</td>
+                    <td>@(announcement.WasAnnounced ?? false ? "Announced" : "Pending")</td>
+                    <td>@announcement.Channel!.ChannelName</td>
+                    <td>@announcement.Announcement</td>
+                    <td>
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="btn reset"><i class="bi bi-arrow-clockwise"></i></div>
+                            <div class="btn delete"><i class="bi bi-trash text-danger"></i></div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-hover align-middle">
+        <caption>Submissions</caption>
+        <thead>
+            <tr>
+                <th scope="col">Votes</th>
+                <th scope="col">User</th>
+                <th scope="col">Song/Artist</th>
+                <th scope="col">Link</th>
+                <th scope="col">Selected</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            @{
+                var groupedVotes = votes.GroupBy(s => (uint)s.SongSubmission!.Id!);
+                var maxVotes = (projectStatus is ProjectStatus.Status.Developing or ProjectStatus.Status.Finished && groupedVotes.Count() > 0)
+                ? groupedVotes.Max(g => g.Count()) : -1;
+            }
+            @if (submissions.Count == 0)
+            {
+                <tr class="cursor-pointer text-center">
+                    <td class="" colspan="100">No submissions.</td>
+                </tr>
+            }
+            @foreach (var submission in submissions)
+            {
+                var isSelectedForVoting = submission.IsSelectedForVoting ?? false;
+                var submissionVotes = groupedVotes.FirstOrDefault(g => g.Key == submission.Id);
+                var voteCount = submissionVotes?.Count() ?? 0;
+                <tr class="submission cursor-pointer @(voteCount == maxVotes ? "table-primary" : "")" data-id="@submission.Id" data-is-selected-for-voting="@(isSelectedForVoting ? "true" : "false")">
+                    <td>@(isSelectedForVoting ? voteCount : "N/A")</td>
+                    <td>@submission.User!.Username</td>
+                    <td>@submission.Title</td>
+                    <td><a href="@submission.Uri" target="_blank">@submission.Uri</a></td>
+                    <td>@(isSelectedForVoting ? "Yes" : "No")</td>
+                    <td>
+                        @if (projectStatus == ProjectStatus.Status.Submission)
+                        {
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="btn delete"><i class="bi bi-trash text-danger"></i></div>
+                            </div>
+                        }
+                    </td>
+                </tr>
+                @if (isSelectedForVoting)
+                {
+                    <tr class="votes d-none" data-submission-id="@submission.Id">
+                        <td class="" colspan="100">
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">User</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-group-divider">
+                                        @if (voteCount == 0)
+                                        {
+                                            <tr class="cursor-pointer text-center">
+                                                <td class="" colspan="100">No votes.</td>
+                                            </tr>
+                                        }
+                                        else
+                                            @foreach (var vote in submissionVotes)
+                                            {
+                                                <tr class="vote cursor-pointer" data-user-id="@vote.User!.Id">
+                                                    <td>@vote.User.Username</td>
+                                                    <td>
+                                                        @if (project.ProjectStatus == ProjectStatus.Status.Voting)
+                                                        {
+                                                            <div class="d-flex align-items-center gap-2">
+                                                                <div class="btn delete"><i class="bi bi-trash text-danger"></i></div>
+                                                            </div>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+@await Html.PartialAsync("_Modal", new Modal() { Id = "advance-project", Title = "Next state", Description = "You want to advance project to the next state?", SuccessButtonText = "Advance", IsStaticBackdrop = true })
+@await Html.PartialAsync("_Modal", new Modal() { Id = "delete-project", Title = "Delete project", Description = "Are you sure you want to delete the project?", DangerButtonText = "Delete", IsStaticBackdrop = true })
+
+@await Html.PartialAsync("_Modal", new Modal() { Id = "reset-announcement", Title = "Reset announcement", Description = "Resetting the announcement will set it back to 'Pending', and it shall be announced on the channel again. Are you sure you want to reset the announcement?", PrimaryButtonText = "Reset", IsStaticBackdrop = true })
+@await Html.PartialAsync("_Modal", new Modal() { Id = "delete-announcement", Title = "Delete announcement", Description = "Are you sure you want to delete the announcement?", DangerButtonText = "Delete", IsStaticBackdrop = true })
+
+@await Html.PartialAsync("_Modal", new Modal() { Id = "delete-submission", Title = "Delete song submission", Description = "Are you sure you want to delete the song submission?", DangerButtonText = "Delete", IsStaticBackdrop = true })
+@await Html.PartialAsync("_Modal", new Modal() { Id = "delete-vote", Title = "Delete vote", Description = "Are you sure you want to delete the vote?", DangerButtonText = "Delete", IsStaticBackdrop = true })
+
+@section Scripts {
+    <script src="~/js/project.js" defer></script>
+}

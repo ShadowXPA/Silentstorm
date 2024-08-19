@@ -1,0 +1,19 @@
+﻿@model List<SilentstormUserDto>
+@{
+    ViewData["Title"] = "Create new user";
+}
+
+<form method="post" class="needs-validation form-floating" novalidate>
+    <div class="row">
+        <div class="col">
+            <div class="form-floating mb-3">
+                <input type="text" id="username" name="username" placeholder="Username" class="form-control" required maxlength="32" />
+                <label for="title">Username *</label>
+                <div class="invalid-feedback">Please insert a username.</div>
+            </div>
+        </div>
+    </div>
+    <div class="mb-3">
+        <input type="submit" class="btn btn-primary d-block ms-auto" value="Create" />
+    </div>
+</form>

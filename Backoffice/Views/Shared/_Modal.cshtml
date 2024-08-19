@@ -1,0 +1,40 @@
+﻿@model Modal
+@{
+    var id = Model.Id;
+    var title = Model.Title;
+    var description = Model.Description;
+    var primaryBtnText = Model.PrimaryButtonText;
+    var secondaryBtnText = Model.SecondaryButtonText;
+    var dangerBtnText = Model.DangerButtonText;
+    var successBtnText = Model.SuccessButtonText;
+    var isStaticBackdrop = Model.IsStaticBackdrop;
+}
+
+<div id="@id" class="modal fade" tabindex="-1" aria-labelledby="@id-title" @(isStaticBackdrop ? "data-bs-backdrop=static data-bs-keyboard=false" : "")>
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="@id-title">@title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>@description</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@secondaryBtnText</button>
+                @if (dangerBtnText is not null)
+                {
+                    <button type="button" class="btn btn-danger">@dangerBtnText</button>
+                }
+                @if (successBtnText is not null)
+                {
+                    <button type="button" class="btn btn-success">@successBtnText</button>
+                }
+                @if (primaryBtnText is not null)
+                {
+                    <button type="button" class="btn btn-primary">@primaryBtnText</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
