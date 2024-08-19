@@ -1,0 +1,10 @@
+DROP TABLE IF EXISTS song_vote;
+DROP TABLE IF EXISTS song_submission;
+DROP TABLE IF EXISTS project_announcement;
+DROP TABLE IF EXISTS project;
+DROP TABLE IF EXISTS project_status;
+DROP TABLE IF EXISTS project_type;
+DROP TABLE IF EXISTS channel;
+DROP TABLE IF EXISTS silentstorm_user;
+DROP TABLE IF EXISTS property;
+DROP TABLE IF EXISTS oauth2;

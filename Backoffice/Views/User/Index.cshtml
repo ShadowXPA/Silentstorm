@@ -1,0 +1,54 @@
+﻿@model List<SilentstormUserDto>
+@{
+    var users = Model;
+    ViewData["Title"] = "Users";
+}
+
+@Html.AntiForgeryToken()
+
+<div class="d-flex align-items-center mb-3">
+    <div class="ms-auto"><a class="btn btn-outline-primary" href="~/user/new">Create a new user</a></div>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-hover align-middle">
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Username</th>
+                <th scope="col">Discord ID</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            @if (users.Count == 0)
+            {
+                <tr class="cursor-pointer text-center">
+                    <td class="" colspan="100">No users.</td>
+                </tr>
+            }
+            @foreach (var user in users)
+            {
+                <tr class="user cursor-pointer" data-id="@user.Id">
+                    <th scope="row">@user.Id</th>
+                    <td>@user.Username</td>
+                    <td>@user.DiscordId</td>
+                    <td>
+                        @if (user.Id > 2)
+                        {
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="btn delete"><i class="bi bi-trash text-danger"></i></div>
+                            </div>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@await Html.PartialAsync("_Modal", new Modal() { Id = "delete-user", Title = "Delete user", Description = "Are you sure you want to delete the user?", DangerButtonText = "Delete", IsStaticBackdrop = true })
+
+@section Scripts {
+    <script src="~/js/user.js" defer></script>
+}

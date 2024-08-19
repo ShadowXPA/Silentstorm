@@ -1,0 +1,30 @@
+{
+  "discord_configuration": {
+    "token": "",
+    "intents": "AllUnprivileged",
+    "token_type": "Bot",
+    "minimum_log_level": "Information"
+  },
+  "discord_activity": {
+    "activity_type": "Watching",
+    "name": "Your beautiful MEPs"
+  },
+  "database_configuration": {
+    "hostname": "localhost",
+    "database": "silentstorm",
+    "username": "root",
+    "password": "password",
+    "port": 13306
+  },
+  "lavalink_configuration": {
+    "rest_endpoint": {
+      "hostname": "localhost",
+      "port": 12333
+    },
+    "socket_endpoint": {
+      "hostname": "localhost",
+      "port": 12333
+    },
+    "password": "password"
+  }
+}

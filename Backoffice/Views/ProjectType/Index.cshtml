@@ -1,0 +1,31 @@
+﻿@model List<ProjectTypeDto>
+@{
+    var projectTypes = Model;
+    ViewData["Title"] = "Project Types";
+}
+
+<div class="table-responsive">
+    <table class="table table-hover align-middle">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            @if (projectTypes.Count == 0)
+            {
+                <tr class="cursor-pointer text-center">
+                    <td class="" colspan="100">No types.</td>
+                </tr>
+            }
+            @foreach (var projectType in projectTypes)
+            {
+                <tr class="cursor-pointer">
+                    <td>@projectType.Name</td>
+                    <td>@projectType.Description</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

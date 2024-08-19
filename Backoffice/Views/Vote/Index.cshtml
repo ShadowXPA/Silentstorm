@@ -1,0 +1,59 @@
+﻿@model (List<ProjectDto>, List<SilentstormUserDto>, Dictionary<uint, List<SongSubmissionDto>>)
+@{
+    (var projects, var users, var submissions) = Model;
+    ViewData["Title"] = "Add song vote";
+}
+
+<form method="post" class="needs-validation form-floating" novalidate>
+    <div class="row">
+        <div class="col">
+            <div class="form-floating mb-3">
+                <select id="project" name="project.id" placeholder="Project" class="form-select" required>
+                    <option value="" selected disabled></option>
+                    @foreach (var project in projects)
+                    {
+                        <option value="@project.Id">@project.Title</option>
+                    }
+                </select>
+                <label for="project">Project *</label>
+                <div class="invalid-feedback">Please select a project.</div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-floating mb-3">
+                <select id="user" name="user.id" placeholder="User" class="form-select" required>
+                    <option value="" selected disabled></option>
+                    @foreach (var user in users)
+                    {
+                        <option value="@user.Id">@user.Username</option>
+                    }
+                </select>
+                <label for="user">User *</label>
+                <div class="invalid-feedback">Please select a user.</div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-floating mb-3">
+                <select id="submission" name="songSubmission.id" placeholder="Song Submission" class="form-select" required>
+                    <option value="" selected disabled></option>
+                    @foreach (var submission in submissions)
+                    {
+                        foreach (var songSubmission in submission.Value)
+                        {
+                            <option class="d-none" value="@songSubmission.Id" data-project-id="@submission.Key">@songSubmission.Title</option>
+                        }
+                    }
+                </select>
+                <label for="submission">Song submission *</label>
+                <div class="invalid-feedback">Please select a song submission.</div>
+            </div>
+        </div>
+    </div>
+    <div class="mb-3">
+        <input type="submit" class="btn btn-primary d-block ms-auto" value="Add" />
+    </div>
+</form>
+
+@section Scripts {
+    <script src="~/js/vote.js" defer></script>
+}

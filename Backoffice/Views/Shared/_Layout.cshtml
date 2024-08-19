@@ -1,0 +1,51 @@
+﻿@using System.Security.Claims
+@{
+    var username = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
+    var pageTitle = ViewBag.Title;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Silentstorm@(string.IsNullOrWhiteSpace(pageTitle) ? string.Empty : $@" - {pageTitle}")</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body class="d-flex flex-column justify-content-between">
+    <input type="hidden" id="base-url" value="@Url.Content("~/")" />
+    <header class="border-bottom p-3">
+        <nav class="d-flex gap-2 justify-content-start align-items-center">
+            <span class="fs-4 fw-bold">Silentstorm Backoffice</span>
+            <a class="btn btn-outline-primary" href="~/">Home</a>
+            <a class="btn btn-outline-primary" href="~/user">Users</a>
+            <a class="btn btn-outline-primary" href="~/announcement">Announcements</a>
+            <a class="btn btn-outline-primary" href="~/submission">Submissions</a>
+            <a class="btn btn-outline-primary" href="~/vote">Votes</a>
+            <div class="d-flex gap-2 align-items-center ms-auto">
+                @if (!string.IsNullOrEmpty(username))
+                {
+                    <span>Hello, <span class="text-primary">@username</span>!</span>
+                }
+                <a class="btn btn-outline-primary" href="~/logout">Log out</a>
+            </div>
+        </nav>
+    </header>
+    <main class="p-4">
+        <div class="container">
+            @RenderBody()
+        </div>
+    </main>
+    <footer class="border-top p-2">
+        <span class="d-flex justify-content-end align-items-center">&copy; 2022 - 2023 Silentstorm Backoffice by <a class="btn btn-sm text-primary btn-link" href="https://github.com/ShadowXPA" target="_blank">Pedro Alves</a></span>
+    </footer>
+    <script src="~/lib/jquery/jquery.min.js" defer></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js" defer></script>
+    <script src="~/js/site.js" defer></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
