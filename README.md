@@ -4,23 +4,22 @@ Fanvid Studio management tools.
 
 ## Silentstorm Backoffice
 
-<img src="resources/Screenshot-5.png" alt="Main page" width="1000"/>
 <img src="resources/Screenshot-6.png" alt="Project page" width="1000"/>
 
 The backoffice lets you view your projects, create projects, create project announcements, add song submissions, add song votes, manage users, etc.  
 
 ## Silentstorm Discord Bot
 
-<img src="resources/Screenshot-2.png" alt="Main page" width="1000"/>
-<img src="resources/Screenshot-3.png" alt="Main page" width="1000"/>
-<img src="resources/Screenshot-7.png" alt="Main page" width="1000"/>
-<img src="resources/Screenshot-4.png" alt="Main page" width="1000"/>
+<img src="resources/Screenshot-2.png" alt="Register channel" width="1000"/>
+<img src="resources/Screenshot-3.png" alt="Fail submitting a song" width="1000"/>
+<img src="resources/Screenshot-7.png" alt="Announcement" width="1000"/>
+<img src="resources/Screenshot-4.png" alt="Submit song" width="1000"/>
 
 The discord bot lets you register and unregister channels for announcements, and submit songs for projects.  
 
 ## Running the applications
 
-Download the [`.NET Core 6 Runtime`](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) to be able to run the applications.  
+Download the [.NET Core 6 Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) to be able to run the applications.  
 Download the latest version available on the [Releases](https://github.com/ShadowXPA/silentstorm/releases) tab.  
 
 ### Database and Lavalink
@@ -43,7 +42,7 @@ To run the bot, simply run the `DiscordBot.exe` (for Windows) or `./DiscordBot` 
 ## Future work
 
 This project is lacking in a lot of features, namely security features.
-It is not production ready!
+**It is not production ready!**
 It is best for personal use, with limited access to the backoffice.  
 
 Below are some features that could be integrated.  
