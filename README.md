@@ -2,38 +2,47 @@
 
 Fanvid Studio management tools.
 
-## Silentstorm Backoffice
+## Backoffice
 
-<img src="resources/Screenshot-6.png" alt="Project page" width="1000"/>
+![Project Page](screenshots/Screenshot-6.png "Project page")
 
 The backoffice lets you view your projects, create projects, create project announcements, add song submissions, add song votes, manage users, etc.  
 
-## Silentstorm Discord Bot
+## Discord Bot
 
-<img src="resources/Screenshot-2.png" alt="Register channel" width="1000"/>
-<img src="resources/Screenshot-3.png" alt="Fail submitting a song" width="1000"/>
-<img src="resources/Screenshot-7.png" alt="Announcement" width="1000"/>
-<img src="resources/Screenshot-4.png" alt="Submit song" width="1000"/>
+![Register Channel](screenshots/Screenshot-2.png "Register channel")
+![Fail Submitting a Song](screenshots/Screenshot-3.png "Fail submitting a song")
+![Announcement](screenshots/Screenshot-7.png "Announcement")
+![Submit Song](screenshots/Screenshot-4.png "Submit song")
 
 The discord bot lets you register and unregister channels for announcements, and submit songs for projects.  
 
-## Running the applications
+## Installation
 
-Download the [.NET Core 6 Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) to be able to run the applications.  
-Download the latest version available on the [Releases](https://github.com/ShadowXPA/silentstorm/releases) tab.  
+### Prerequisites
+
+- [.NET Core 6 Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
+- Without Docker:
+  - [MySQL](https://www.mysql.com/)
+  - [Lavalink](https://github.com/lavalink-devs/Lavalink) **version 3** ([Deprecated](https://github.com/lavalink-devs/Lavalink/discussions/1100))
+- [Docker](https://www.docker.com/) (Optional)
+
+### Run
+
+Download the latest version available on the [Releases](https://github.com/ShadowXPA/Silentstorm/releases/latest) tab.  
 
 ### Database and Lavalink
 
-You will need a [MySQL](https://www.mysql.com/) database and [Lavalink](https://github.com/lavalink-devs/Lavalink) **version 3** to run these applications successfully.
-If you have [Docker](https://www.docker.com/) installed, there is a `docker-compose.yml` with both MySQL and Lavalink. Edit it to your liking.  
+You will need a [MySQL](https://www.mysql.com/) database and [Lavalink](https://github.com/lavalink-devs/Lavalink) **version 3** ([Deprecated](https://github.com/lavalink-devs/Lavalink/discussions/1100)) to run these applications successfully.
+If you have [Docker](https://www.docker.com/) installed, there is a `docker-compose.yml` with both MySQL and Lavalink (edit it to your liking).  
 
-### Silentstorm Backoffice
+### Backoffice
 
 Before running the backoffice application, edit the `backoffice.json` configuration file.  
 To run the backoffice, simply run the `Backoffice.exe` (for Windows) or `./Backoffice` (for Linux).  
 The application should start on [`https://localhost:5001`](https://localhost:5001).
 
-### Silentstorm Discord Bot
+### Discord Bot
 
 Before running the discord bot, edit the `discordbot.json` configuration file. And do not forget to add your bot's token.  
 If you do not have a token, head over to the [Discord Developers](https://discord.com/developers) page, create an application, and on the `Bot`'s tab you can grab a `Token`.
@@ -47,7 +56,7 @@ It is best for personal use, with limited access to the backoffice.
 
 Below are some features that could be integrated.  
 
-### Silentstorm Backoffice
+### Backoffice
 
 - Roles (Admin, Member, Editor, etc.)
 - Associate members to projects
@@ -56,7 +65,7 @@ Below are some features that could be integrated.
 - Profiles for each member, with their public projects
 - Pagination on the various pages
 
-### Silentstorm Discord Bot
+### Discord Bot
 
 - Automatic discord role creation
 - Automatic discord role assignments
